@@ -1,0 +1,13 @@
+# Archivos compilados
+build/
+*.elf
+*.bin
+*.hex
+*.o
+*.a
+*.map
+
+# Archivos temporales
+*.swp
+*.swo
+*~
