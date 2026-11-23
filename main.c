@@ -1,28 +1,32 @@
-#define UARTO_BASE 0x40004000
-#define UARTO_DATA (*(volatile unsigned int *)(UARTO_BASE + 0x00))
-#define UARTO_STATE (*(volatile unsigned int *)(UARTO_BASE + 0x04)) 
-#define UARTO_CTRL (*(volatile unsigned int *)(UARTO_BASE + 0x08))
-#define UART_TX_FULL (1 << 0)
+#define UART0_BASE 0x40004000
+#define UART0_DATA (*(volatile unsigned int *)(UART0_BASE + 0x00))
+#define UART0_STATE (*(volatile unsigned int *)(UART0_BASE + 0x04))
+#define UART0_CTRL (*(volatile unsigned int *)(UART0_BASE + 0x08))
+#define UART_TX_FULL (1U << 0)
 
-void uart_putc(char c) {
-    while (UARTO_STATE & UART_TX_FULL);
-    UARTO_DATA = c;
+static void UartPutc(char character) {
+  while (UART0_STATE & UART_TX_FULL)
+    ;
+  UART0_DATA = (unsigned int)character;
 }
 
-void uart_puts(const char *s) {
-    while (*s) {
-        uart_putc(*s++);
-    }
+static void UartPuts(const char *text) {
+  while (*text != '\0') {
+    UartPutc(*text++);
+  }
+}
+
+static void Delay(volatile unsigned int cycles) {
+  while (cycles-- > 0)
+    ;
 }
 
 int main(void) {
-    UARTO_CTRL = 1; // Enable UART
-    uart_puts("Hola desde Cortex-M3\n");
+  UART0_CTRL = 1; // Activa el UART.
+  UartPuts("Hola desde Cortex-M3\n");
 
-    volatile int i = 0;
-    while (1) {
-        uart_puts("tick\r\n");
-        for (i = 0; i < 500000; i++);
-    }
-    return 0;
+  while (1) {
+    UartPuts("tick\r\n");
+    Delay(500000U);
+  }
 }

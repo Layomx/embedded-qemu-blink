@@ -1,22 +1,27 @@
 
-# embedded-qemu-blink
+# Embedded QEMU Blink
 
-Proyecto bare-metal para ARM Cortex-M3 corriendo en QEMU
+Proyecto bare-metal para ARM Cortex-M3 ejecutado en QEMU.
 
-## Descripcion
-Firmware en C sin HAL ni biblioteca estandar.
-Simula un microcontrolador STM3 en QEMU mps-an385
+## Descripción
+
+Firmware en C sin HAL ni biblioteca estándar. Simula un microcontrolador
+Cortex-M3 en la placa MPS2-AN385 de QEMU.
 
 ## Herramientas
+
 - arm-none-eabi-gcc
 - QEMU qemu-system-arm
-- GBD gdb-multiarch
+- GDB gdb-multiarch
 - Make
 
-## Como compilar y correr el proyecto
+## Cómo compilar y ejecutar
+
 ```bash
-make # compila el proyecto
-make run # ejecuta QEMU
-make debug # abre puerto GDB en :3333
+make       # Compila el proyecto.
+make run   # Ejecuta el firmware en QEMU.
+make debug # Abre el puerto GDB en 3333.
 ```
-Realice el proyecto en un entorno controlado en Linux Debian especificamente, desde una terminal sin ningun tipo de entorno grafico, unicamente utiliando la herramienta tmux.
+
+El proyecto fue desarrollado en Linux Debian desde una terminal sin
+entorno gráfico, utilizando tmux.

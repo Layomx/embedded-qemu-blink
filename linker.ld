@@ -9,13 +9,22 @@ SECTIONS {
     .text : {
         *(.isr_vector)
         *(.text*)
+        *(.rodata*)
+        _etext = .;
     } > FLASH
 
-    .bss : {
-        *(.bss*)
+    .data : AT(_etext) {
+        _sdata = .;
+        *(.data*)
+        _edata = .;
     } > RAM
 
-    .data : {
-        *(.data*)
-    } > RAM AT > FLASH
+    _sidata = LOADADDR(.data);
+
+    .bss (NOLOAD) : {
+        _sbss = .;
+        *(.bss*)
+        *(COMMON)
+        _ebss = .;
+    } > RAM
 }
